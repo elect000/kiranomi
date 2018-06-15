@@ -80,7 +80,7 @@
                  [:div.d-flex {:key (gen-key)
                                :style {:border-left "2px solid silver"}}
                   (doall
-                   (map (fn [i] [:div.flex-fill.pb-5
+                   (map (fn [i] [:div.flex-fill.pb-4
                                  {:class (if (some #(= % i)
                                                    @(rf/subscribe [:dates]))
                                            :bg-dark :bg-white)
@@ -130,5 +130,3 @@
   ;;     (.startOf "month")
   ;;     (.add -1 "day")
   ;;     (.date))
-
-  

@@ -66,5 +66,4 @@
  :month-add
  (fn [db _]
    (if-let [a (-> db :month-add)]
-     (do (println a) a) (do
-                          (println ">>>") 0))))
+     a 0)))

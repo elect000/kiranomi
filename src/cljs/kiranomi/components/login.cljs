@@ -5,7 +5,8 @@
             [kiranomi.components.common :as c]))
 
 (defn login! [fields error]
-  #(rf/dispatch [:calender]))
+  (rf/dispatch [:remove-modal])
+  (set! (-> js/document .-location .-href) "/#/home"))
 
 (defn login-form []
   (let [fields (atom {})
@@ -22,7 +23,7 @@
             [:div.alert.alert-danger error])]
          [:div.container
           [:div.row
-           [:dov.col-4.text-center
+           [:div.col-4.text-center
             [:button.btn.btn-danger.btn-lg
              {:on-click #(rf/dispatch [:remove-modal])}
              "Exit"]]
@@ -33,6 +34,7 @@
            ]]]]])))
 
 (defn login-button []
-  [:button.btn-primary.btn.btn-lg
-   {:on-click #(rf/dispatch [:set-modal login-form])} "Login"])
+  [:button.btn.btn-lg.btn-warning
+   {:style {:color "white"}
+    :on-click #(rf/dispatch [:set-modal login-form])} "Login"])
 

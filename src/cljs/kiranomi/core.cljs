@@ -25,18 +25,38 @@
    [:a.nav-link {:href uri} title]])
 
 (defn navbar []
-  [:nav.navbar.navbar-dark.bg-primary.navbar-expand-md
-   {:role "navigation"}
-   [:button.navbar-toggler.hidden-sm-up
-    {:type "button"
-     :data-toggle "collapse"
-     :data-target "#collapsing-navbar"}
-    [:span.navbar-toggler-icon]]
-   [:a.navbar-brand {:href "#/"} "kiranomi"]
-   [:div#collapsing-navbar.collapse.navbar-collapse
-    [:ul.nav.navbar-nav.mr-auto
-     [nav-link "#/" "Home" :home]
-     [nav-link "#/about" "About" :about]]]])
+  [:nav.navbar.navbar-dark.navbar-expand-md
+   {:role "navigation"
+    :style {:background-color "orange"}}
+   ;; [:button.navbar-toggler.hidden-sm-up
+   ;;  {:type "button"
+   ;;   :data-toggle "collapse"
+   ;;   :data-target "#collapsing-navbar"}
+   ;;  [:span.navbar-toggler-icon]]
+   [:div.container
+    {:style {:width "100%"}}
+    [:div.d-flex.justify-content-around
+     {:style {:width "100%"}}
+     [:div
+      [:a.navbar-brand {:href "#/"} [:img {:src "img/honou.png"
+                                           :width "25"
+                                           :height "30"}]]]
+     ;; [:div#collapsing-navbar.collapse.navbar-collapse
+     ;;  [:ul.nav.navbar-nav.mr-auto
+     ;;   [nav-link "#/" "Home" :home]
+     ;;   [nav-link "#/about" "About" :about]
+     ;;   (when (= :calender @(rf/subscribe [:page]))
+     ;;     [nav-link "#/home" "Plan" :about])]]
+     [:div
+      (if (= :calender @(rf/subscribe [:page]))
+        [:input.form-fontrol.mt-2
+         {:type "search"
+          :placeholder "Title"
+          :name "Title"}]
+        [:label.text-white.h3 "KIRA☆NOMI"])]
+     [:div
+      [:span.navbar-toggler-icon.mt-2]]]]
+   ])
 
 (defn about-page []
   [:div.container
@@ -47,7 +67,7 @@
 (defn home-page []
   [:div.container
    [:div.row.justify-content-center
-    [:div.col-md-4.offset-4
+    [:div.col-md-4.mt-5.text-center
      [login/login-button]]]
    ;;  [:h2.alert.alert-info "Tip: try pressing CTRL+H to open re-frame tracing menu"]]
    ;; (when-let [docs @(rf/subscribe [:docs])]
@@ -60,7 +80,11 @@
 (defn calender-page []
   [:div
    (calender/cal-array->hiccup
-    (calender/get-cal-array @(rf/subscribe [:month-add])))])
+    (calender/get-cal-array @(rf/subscribe [:month-add])))
+   [:div
+    (if (= :calender @(rf/subscribe [:page]))
+      [:div.offset-8.text-center.mt-3
+       [:button.btn.btn-warning.btn-lg.text-white "Next"]])]])
 
 (def pages
   {:home #'home-page
@@ -74,7 +98,7 @@
    [(pages @(rf/subscribe [:page]))]])
 
 ;; -------------------------
-;; Routes
+;; Routes各位
 
 (def router
   (reitit/router
