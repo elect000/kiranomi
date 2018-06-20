@@ -55,11 +55,12 @@
 (def months (list "January" "February" "March" "April" "May" "June"
                   "July" "August" "September" "October" "November" "December"))
 
+
 (defn cal-array->hiccup [{:keys [month calender]}]
   [:div.container
    [:div.row.justify-content-center.pt-5
-    [:div.text-center [:h3 (nth months month)]]]
-   [:div.row
+    [:div.text-center [:h1 (nth months (mod (dec month) 12))]]]
+   [:div.row.mt-3
     [:div.col-1.my-auto
      [:i.fa.fa-chevron-left.fa-2x {:aria-hidden "false"
                                    :on-click #(rf/dispatch [:month-adder -1])}]]
@@ -72,7 +73,8 @@
           (doall
            (map (fn [i] [:div.flex-fill
                          {:key (gen-key)
-                          :style {:border-bottom "2px solid silver"}}
+                          :style {:border-bottom "2px solid silver"
+                                  :font-size "1.2em"}}
                          i])
                 en-weeks-s))]
          (doall
@@ -80,10 +82,17 @@
                  [:div.d-flex {:key (gen-key)
                                :style {:border-left "2px solid silver"}}
                   (doall
-                   (map (fn [i] [:div.flex-fill.pb-4
-                                 {:class (if (some #(= % i)
-                                                   @(rf/subscribe [:dates]))
-                                           :bg-dark :bg-white)
+                   (map (fn [i] [:div.flex-fill.pb-5
+                                 {:class
+                                  (list
+                                   :op-1
+                                   (if (some #(= % i)
+                                             @(rf/subscribe [:dates]))
+                                     :bg-green
+                                     (if (= i (+ (* (inc (-> (js/moment) (.month))) 100)
+                                                 (-> (js/moment) (.date))))
+                                       :bg-blue
+                                       :bg-white)))
                                   :key (gen-key)
                                   :style  {:border-right "2px solid silver"
                                            :border-bottom "2px solid silver"
@@ -100,33 +109,3 @@
     [:div.col-1.my-auto
      [:i.fa.fa-chevron-right.fa-2x {:aria-hidden "false"
                                     :on-click #(rf/dispatch [:month-adder 1])}]]]])
-
-  ;; ;; 27 31 1->30 ->...
-  ;; (let [ar (concat (range 27 (inc 31)) (range 1 (inc 30)))
-  ;;       s  (- 7 (mod (count ar) 7))
-  ;;       l  (range 1 (inc s))
-  ;;       arr (concat ar l)
-  ;;       arrays (if (== 5 (/ (count arr) 7))
-  ;;                (concat arr (range (inc s) (+ 8 s)))
-  ;;                arr)]
-  ;;   (/ (count arrays) 7))
-
-  ;; ;; this month's start-day's weekday "Sunday = 0"
-  ;; (-> (js/moment)
-  ;;     (.startOf "month")
-  ;;     (.days))
-
-  ;; ;; today day
-  ;; (-> (js/moment)
-  ;;     (.date))
-
-  ;; ;; this month's end-day
-  ;; (-> (js/moment)
-  ;;     (.endOf "month")
-  ;;     (.date))
-
-  ;; ;; end next day
-  ;; (-> (js/moment)
-  ;;     (.startOf "month")
-  ;;     (.add -1 "day")
-  ;;     (.date))

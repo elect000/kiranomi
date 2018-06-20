@@ -1,6 +1,6 @@
 html,
 body {
-	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* font-family:  Helvetica, Arial, sans-serif, 'Helvetica Neue'; */
   height: 100%;
   width: 100%;
 }
@@ -70,16 +70,61 @@ body {
 
 
 .modal-dialog {
-    z-index: 2;
+    z-index: 3;
     margin: 0 auto;
     position: absolute;
-    top: 50px;
+    top: 80px;
     left: 0;
     right: 0;
 }
 
 .modal-backdrop {
-    z-index: 1;
-    opacity: 0.5;
+    z-index: 2;
+    opacity: 0.9;
     background-color: #f8d8db;
+}
+
+.footer {
+    position:fixed;
+    left:0;
+    bottom:2em;
+    width: 100%;
+    text-align:center;
+}
+
+.bg-red {background-color:rgba(255,0,0,0.4);}
+.bg-green {background-color:rgba(0,255,0,0.4);}
+.bg-blue {background-color:rgba(0,0,255,0.3);}
+.bg-gray {background-color:rgba(192,192,192,0.4);}
+.bg-yellow {background-color:rgba(255,255,0,0.4);}
+.bg-cerise {background-color:rgba(255,0,255,0.4);}
+
+.scrollable {
+    height: 50vh;
+    overflow-y: scroll;
+    border: 7px solid #65bf92;
+    border-bottom: 14px solid #65bf92;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+.scrollable::-webkit-scrollbar {
+    width: 12px;
+}
+
+.scrollable::-webkit-scrollbar-track{
+    background: #fff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: inset 0 0 2px #777; 
+}
+
+.scrollable::-webkit-scrollbar-thumb{
+    background: #aaa;
+    border-radius: 10px;
+    box-shadow: none;
+}
+
+h1, h2, button, body, div {
+    font-family: Helvetica, cursive;
 }

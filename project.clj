@@ -37,7 +37,8 @@
                  [selmer "1.11.7"]
 
                  [bouncer "1.0.1"]
-                 [cljsjs/moment "2.22.2-0"]]
+                 [cljsjs/moment "2.22.2-0"]
+                 [reagent-forms "0.5.42"]]
 
   :min-lein-version "2.0.0"
   

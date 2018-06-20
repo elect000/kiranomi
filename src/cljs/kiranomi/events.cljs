@@ -34,6 +34,21 @@
  :month-adder
  (fn [db [_ adder]]
    (assoc db :month-add (+ adder (if-let [a (:month-add db)] a 0)))))
+
+(reg-event-db
+ :set-title
+ (fn [db [_ title]]
+   (assoc db :title title)))
+
+(reg-event-db
+ :set-login
+ (fn [db [_]]
+   (assoc db :login? true)))
+
+(reg-event-db
+ :set-name
+ (fn [db [_ name]]
+   (assoc db :name name)))
 ;;subscriptions
 
 (reg-sub
@@ -67,3 +82,46 @@
  (fn [db _]
    (if-let [a (-> db :month-add)]
      a 0)))
+
+(reg-sub
+ :title
+ (fn [db _]
+   (-> db :title)))
+
+(reg-sub
+ :login?
+ (fn [db _]
+   (-> db :login?)))
+
+(reg-sub
+ :name
+ (fn [db _]
+   (-> db :name)))
+
+
+;; From reagent-form
+(reg-event-db
+ :init
+ (fn [_ _]
+   {:doc {}}))
+
+(reg-sub
+ :doc
+ (fn [db _]
+   (:doc db)))
+
+(reg-sub
+ :value
+ :<- [:doc]
+ (fn [doc [_ path]]
+   (get-in doc path)))
+
+(reg-event-db
+ :set-value
+ (fn [db [_ path value]]
+   (assoc-in db (into [:doc] path) value)))
+
+(reg-event-db
+ :set-doc
+ (fn [db [_ value]]
+   (assoc db :doc value)))
